@@ -7,7 +7,7 @@ import (
 )
 
 func server() {
-	ln, err := net.Listen("tcp", ":9999")
+	ln, err := net.Listen("tcp", "127.0.0.1:9999")
 	if err != nil {
 		fmt.Println(err)
 		return
