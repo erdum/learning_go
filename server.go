@@ -25,7 +25,7 @@ func server() {
 
 func handleServerConnection(c net.Conn) {
 	var msg string
-	err := gob.NewDecoder()c.Decode(&msg)
+	err := gob.NewDecoder(c).Decode(&msg)
 	if err != nill {
 		fmt.Println(err)
 	} else {
