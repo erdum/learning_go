@@ -18,7 +18,7 @@ func server() {
 			fmt.Println(err)
 			continue
 		}
-		
+
 		go handleServerConnection(c)
 	}
 }
@@ -26,12 +26,12 @@ func server() {
 func handleServerConnection(c net.Conn) {
 	var msg string
 	err := gob.NewDecoder(c).Decode(&msg)
-	if err != nill {
+	if err != nil {
 		fmt.Println(err)
 	} else {
 		fmt.Println("Received", msg)
 	}
-	
+
 	c.Close()
 }
 
