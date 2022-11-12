@@ -34,3 +34,10 @@ func handleServerConnection(c net.Conn) {
 	
 	c.Close()
 }
+
+func main() {
+	go server()
+
+	var input string
+	fmt.Scanln(&input)
+}
