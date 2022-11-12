@@ -6,12 +6,7 @@ import (
 	"net"
 )
 
-func server() {
-	ln, err := net.Listen("tcp", "127.0.0.1:9999")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func server(ln net.Listener) {
 	for {
 		c, err := ln.Accept()
 		if err != nil {
@@ -19,43 +14,22 @@ func server() {
 			continue
 		}
 
-		go handleServerConnection(c)
+		var msg string
+		err = gob.NewDecoder(c).Decode(&msg)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("Received", msg)
+		}
+		c.Close()
 	}
-}
-
-func handleServerConnection(c net.Conn) {
-	var msg string
-	err := gob.NewDecoder(c).Decode(&msg)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("Received", msg)
-	}
-
-	c.Close()
-}
-
-func client() {
-  c, err := net.Dial("tcp", "127.0.0.1:9999")
-  if err != nil {
-    fmt.Println(err)
-    return
-  }
-
-  msg := "Hello World"
-  fmt.Println("Sending", msg)
-  err = gob.NewEncoder(c).Encode(msg)
-  if err != nil {
-    fmt.Println(err)
-  }
-
-  c.Close()
 }
 
 func main() {
-	go server()
-	go client()
-
-	var input string
-	fmt.Scanln(&input)
+	ln, err := net.Listen("tcp", "127.0.0.1:9999")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	server(ln)
 }
