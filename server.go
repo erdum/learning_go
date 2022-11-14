@@ -19,19 +19,17 @@ func server(ln net.Listener) {
 		for {
 		  var msg string
 		  err = gob.NewDecoder(c).Decode(&msg)
-		  if msg == "close" {
-			  c.Close()
-			  fmt.Println("Connectection closed")
-			  break
+		  if (msg == "close") {
+		  	break;
 		  }
 		  if err != nil {
 			  fmt.Println(err)
 		  } else {
 			  fmt.Println("Received", msg)
 		  }
-
-		  fmt.Println("33")
 		}
+	  c.Close()
+	  fmt.Println("Connectection closed")
 	}
 }
 
