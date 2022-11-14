@@ -16,13 +16,13 @@ func client() {
   for {  	
     var msg string
     fmt.Scanln(&msg)
-    if msg == "close" {
-    	break
-    }
     fmt.Println("Sending", msg)
     err = gob.NewEncoder(c).Encode(msg)
     if err != nil {
       fmt.Println(err)
+    }
+    if msg == "close" {
+      break
     }
   }
 
